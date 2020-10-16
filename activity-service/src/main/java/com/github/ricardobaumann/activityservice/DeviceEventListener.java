@@ -10,7 +10,11 @@ package com.github.ricardobaumann.activityservice;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -20,9 +24,17 @@ public class DeviceEventListener {
     private final DeviceRepo deviceRepo;
 
     @StreamListener(MyProcessor.DEVICES_QUEUE)
-    public void handle(DeviceEvent deviceEvent) {
+    @SendTo(MyProcessor.ACTIVITIES_TOPIC)
+    public Activity handle(DeviceEvent deviceEvent) {
         log.info("Handling event: " + deviceEvent);
         deviceRepo.save(deviceEvent.getDevice());
+        return new Activity(
+                UUID.randomUUID().toString(),
+                deviceEvent.getDevice().getId(),
+                0.0,
+                0.0,
+                new Date()
+        );
     }
 
 }
