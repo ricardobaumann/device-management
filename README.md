@@ -2,6 +2,8 @@
 
 Sample project to introduce an event driven architecture based on an IOT device management use case. Services are built using [Spring Cloud ecossystem](https://spring.io/projects/spring-cloud), together with [RabbitMQ](https://www.rabbitmq.com/) for event distribution.
 
+The key point of this approach is not having services calling each other directly to query/write data, but relying on the event messages instead. That is my favorite approach for microservices in general, because it helps to keep clear domains and decouple services. 
+
 ## Architecture
 1. [device-service](https://github.com/ricardobaumann/device-management/tree/master/device-service): CRUD service for the IOT devices. Publish events based on device CRUD events. Has a scheduler to generate dummy events, to show the service capabilities. 
 2. [activity-service](https://github.com/ricardobaumann/device-management/tree/master/activity-service): CRUD service for device activities. Listen for device CRUD events, and publish events based on activities CRUD events. 
