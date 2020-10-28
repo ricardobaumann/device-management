@@ -20,3 +20,4 @@ Sample project to introduce an event driven architecture based on an IOT device 
 ## Next steps
 1. Introduce more usage examples
 2. Introduce more use cases. 
+3. Introduce an event store, like [Kafka](https://kafka.apache.org/documentation/streams/) or [DynamoDB](https://aws.amazon.com/dynamodb). 
